@@ -1,7 +1,7 @@
 /**
  * @description M3U8 to MP4 Converter
  * @author Furkan Inanc
- * @version 1.0.1
+ * @version 1.0.2
  */
 
 const ffmpeg = require("fluent-ffmpeg");
@@ -54,7 +54,7 @@ class m3u8ToMp4Converter {
   }
 
   /**
-   * Sets the duration for the output (alternative to end time)
+   * Sets the duration for the output
    * @param {String|Number} time Duration in seconds or time format (e.g., "30")
    * @returns {Function}
    */
@@ -80,7 +80,9 @@ class m3u8ToMp4Converter {
           onError: (error) => {
             reject(new Error(error));
           },
-          onProgress: () => {},
+          onProgress: (progress) => {
+            console.log("Progress:", progress.percent + "%");
+          },
           onStderr: (stderr) => {
             console.log("FFmpeg stderr:", stderr);
           },
@@ -116,8 +118,12 @@ class m3u8ToMp4Converter {
           resolve();
           options.onEnd(...args);
         })
-        .outputOptions("-c:v copy") // Copy video stream
-        .outputOptions("-c:a aac") // Ensure audio is encoded as AAC
+        .outputOptions("-c:v libx264") // Re-encode video with H.264
+        .outputOptions("-preset medium") // Balance quality and speed
+        .outputOptions("-crf 18") // High quality (lower CRF = better quality, 18 is visually lossless)
+        .outputOptions("-g 1") // Force a keyframe at the start for precise cutting
+        .outputOptions("-c:a aac") // Re-encode audio as AAC
+        .outputOptions("-b:a 192k") // Set audio bitrate for good quality
         .outputOptions("-bsf:a aac_adtstoasc") // Bitstream filter for AAC
         .outputOptions("-map 0") // Map all streams from input
         .outputOptions("-f mp4") // Explicitly set output format to MP4
