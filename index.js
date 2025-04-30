@@ -83,9 +83,7 @@ class m3u8ToMp4Converter {
           onProgress: (progress) => {
             console.log("Progress:", progress.percent + "%");
           },
-          onStderr: (stderr) => {
-            console.log("FFmpeg stderr:", stderr);
-          },
+          onStderr: () => {},
           onCodecData: (data) => {
             console.log("Codec data:", data);
           },
