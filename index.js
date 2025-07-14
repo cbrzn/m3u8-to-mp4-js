@@ -117,13 +117,10 @@ class m3u8ToMp4Converter {
           options.onEnd(...args);
         })
         .outputOptions("-c:v libx264")
-        .outputOptions("-preset medium")
+        .outputOptions("-preset slow")
         .outputOptions("-crf 23")
-        .outputOptions("-g 1")
         .outputOptions("-c:a aac")
         .outputOptions("-b:a 128k")
-        .outputOptions("-bsf:a aac_adtstoasc")
-        .outputOptions("-map 0")
         .outputOptions("-f mp4")
         .output(this.OUTPUT_FILE)
         .run();
