@@ -116,15 +116,15 @@ class m3u8ToMp4Converter {
           resolve();
           options.onEnd(...args);
         })
-        .outputOptions("-c:v libx264") // Re-encode video with H.264
-        .outputOptions("-preset medium") // Balance quality and speed
-        .outputOptions("-crf 18") // High quality (lower CRF = better quality, 18 is visually lossless)
-        .outputOptions("-g 1") // Force a keyframe at the start for precise cutting
-        .outputOptions("-c:a aac") // Re-encode audio as AAC
-        .outputOptions("-b:a 192k") // Set audio bitrate for good quality
-        .outputOptions("-bsf:a aac_adtstoasc") // Bitstream filter for AAC
-        .outputOptions("-map 0") // Map all streams from input
-        .outputOptions("-f mp4") // Explicitly set output format to MP4
+        .outputOptions("-c:v libx264")
+        .outputOptions("-preset medium")
+        .outputOptions("-crf 23")
+        .outputOptions("-g 1")
+        .outputOptions("-c:a aac")
+        .outputOptions("-b:a 128k")
+        .outputOptions("-bsf:a aac_adtstoasc")
+        .outputOptions("-map 0")
+        .outputOptions("-f mp4")
         .output(this.OUTPUT_FILE)
         .run();
     });
