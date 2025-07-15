@@ -1,7 +1,7 @@
 /**
  * @description M3U8 to MP4 Converter
  * @author Furkan Inanc
- * @version 1.0.2
+ * @version 1.0.3
  */
 
 const ffmpeg = require("fluent-ffmpeg");
@@ -117,7 +117,7 @@ class m3u8ToMp4Converter {
           options.onEnd(...args);
         })
         .outputOptions("-c:v libx264")
-        .outputOptions("-preset slow")
+        .outputOptions("-preset medium")
         .outputOptions("-crf 23")
         .outputOptions("-c:a aac")
         .outputOptions("-b:a 128k")
